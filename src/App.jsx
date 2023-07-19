@@ -1,11 +1,30 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import Navbar from "./components/Navbar";
+import locomotiveScroll from "locomotive-scroll";
+import gsap from "gsap";
 
 const App = () => {
+  let tl = gsap.timeline();
+  let wrapper = useRef(null);
+  let main = useRef(null);
+
+  useEffect(() => {
+    const scroll = new locomotiveScroll({
+      el: wrapper.current,
+      smooth: true,
+    });
+    scroll.scrollTo(main.current);
+    tl.to(wrapper.current, { y: "100vh", scale: 0.6, duration: 0 });
+    tl.to(wrapper.current, { y: "30vh", duration: 1, delay: 1 });
+    tl.to(wrapper.current, { y: "0vh", rotate: 360, scale: 1, duration: 0.7 });
+  });
+
+  console.log(wrapper);
+
   return (
     <div>
-      <div id="main">
-        <div id="wrapper" className="bg-[#C5BEB4] h-screen w-screen relative">
+      <div className="bg-[#222]" ref={main}>
+        <div className="bg-[#C5BEB4] h-screen w-screen relative" ref={wrapper}>
           <Navbar />
           <section className="w-full h-[400px] flex items-center justify-between py-10 px-12">
             <div className="w-[30%]">
@@ -62,6 +81,12 @@ const App = () => {
               </p>
             </div>
           </section>
+
+          <h1 className="bg-black font-Canopee text-[500px] w-[96%] h-[80%] ml-[2%] text-[#C5BEB4] text-center">
+            MIRANDA
+          </h1>
+
+          <section className=""></section>
         </div>
       </div>
     </div>
